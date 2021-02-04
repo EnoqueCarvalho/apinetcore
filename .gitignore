@@ -1,0 +1,12 @@
+packages/
+node_modules/
+gruntfile.js
+dest/
+
+#Visual Studio files
+*.suo
+*.pdb
+bin/
+obj/
+PublishProfiles/
+.vs/

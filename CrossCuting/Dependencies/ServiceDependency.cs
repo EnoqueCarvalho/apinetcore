@@ -7,11 +7,12 @@ using System.Text;
 
 namespace CrossCuting.DependencyInjection
 {
-    public static class ConfigureService
+    public static class ServiceDependency
     {
-        public static void ConfigureServiceDependencies(this IServiceCollection serviceCollection)
+        public static void AddServiceDepedencies(this IServiceCollection services)
         {
-            serviceCollection.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ILoginService, LoginService>();
         }
     }
 }

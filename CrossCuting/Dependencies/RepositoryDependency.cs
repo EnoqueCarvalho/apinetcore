@@ -1,6 +1,8 @@
 ﻿using Data.Contexts;
+using Data.Implementations;
 using Data.Repository;
 using Domain.Interfaces;
+using Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,13 +12,14 @@ using System.Text;
 
 namespace CrossCuting.DependencyInjection
 {
-    public static class ConfigureRepository
+    public static class RepositoryDependency
     {
-        public static void ConfigureRepositoryDependencies(this IServiceCollection serviceCollection, IConfiguration configuration)
+        public static void AddRepositoryDepedencies(this IServiceCollection services, IConfiguration configuration)
         {
-            serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IUserRepository, UserImplementation>();
 
-            serviceCollection.AddDbContext<ApplicationContext>(options =>
+            services.AddDbContext<ApplicationContext>(options =>
             {
                 options.UseMySql(configuration.GetConnectionString("Default"));
             });

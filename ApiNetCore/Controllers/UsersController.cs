@@ -1,6 +1,7 @@
 ﻿using ApiNetCore.Api.Extensions;
 using Domain.Entities;
 using Domain.Interfaces.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace ApiNetCore.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -89,6 +91,25 @@ namespace ApiNetCore.Api.Controllers
                     return Ok(result);
 
                 return BadRequest();
+            }
+            catch (Exception exception)
+            {
+                return this.TratarExcecao(exception);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            try
+            {
+                if (id == Guid.Empty)
+                    return BadRequest();
+
+                if (await userService.Delete(id))
+                    return Ok();
+
+                return NotFound();
             }
             catch (Exception exception)
             {

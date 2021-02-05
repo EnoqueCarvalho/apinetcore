@@ -23,85 +23,50 @@ namespace Data.Repository
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            try
-            {
-                var result = await dataSet.FirstOrDefaultAsync(p => p.Id.Equals(id));
+            var result = await dataSet.FirstOrDefaultAsync(p => p.Id.Equals(id));
 
-                if (result == null)
-                    return false;
+            if (result == null)
+                return false;
 
-                dataSet.Remove(result);
-                await context.SaveChangesAsync();
+            dataSet.Remove(result);
+            await context.SaveChangesAsync();
 
-                return true;
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            return true;
         }
 
         public async Task<T> InsertAsync(T item)
         {
-            try
-            {
-                if (item.Id == Guid.Empty)
-                    item.Id = Guid.NewGuid();
+            if (item.Id == Guid.Empty)
+                item.Id = Guid.NewGuid();
 
-                item.CreateAt = DateTime.UtcNow;
-                dataSet.Add(item);
-                await context.SaveChangesAsync();
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            item.CreateAt = DateTime.UtcNow;
+            dataSet.Add(item);
+            await context.SaveChangesAsync();
 
             return item;
         }
 
         public async Task<T> SelectAsync(Guid id)
         {
-            try
-            {
-                return await dataSet.SingleOrDefaultAsync(p => p.Id.Equals(id));
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            return await dataSet.SingleOrDefaultAsync(p => p.Id.Equals(id));
         }
 
         public async Task<IEnumerable<T>> SelectAsync()
         {
-            try
-            {
-                return await dataSet.ToListAsync();
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            return await dataSet.ToListAsync();
         }
 
         public async Task<T> UpdateAsync(T item)
         {
-            try
-            {
-                var result = await dataSet.FirstOrDefaultAsync(p => p.Id.Equals(item.Id));
+            var result = await dataSet.FirstOrDefaultAsync(p => p.Id.Equals(item.Id));
 
-                if (result == null)
-                    return null;
+            if (result == null)
+                return null;
 
-                item.UpdateAt = DateTime.UtcNow;
-                item.CreateAt = result.CreateAt;
-                context.Entry(result).CurrentValues.SetValues(item);
-                await context.SaveChangesAsync();
-            }
-            catch (Exception exception)
-            {
-                throw exception;
-            }
+            item.UpdateAt = DateTime.UtcNow;
+            item.CreateAt = result.CreateAt;
+            context.Entry(result).CurrentValues.SetValues(item);
+            await context.SaveChangesAsync();
 
             return item;
         }

@@ -1,4 +1,5 @@
 ﻿using ApiNetCore.Api.Extensions;
+using Domain.Dtos.User;
 using Domain.Entities;
 using Domain.Interfaces.Services.User;
 using Microsoft.AspNetCore.Authorization;
@@ -57,19 +58,14 @@ namespace ApiNetCore.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(UserEntity user)
+        public async Task<ActionResult> Post(UserDtoCreate user)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             try
             {
-                var result = await userService.Post(user);
-
-                if (result != null)
-                    return Ok(await userService.Get(result.Id));
-
-                return BadRequest();
+                return Ok(await userService.Post(user));
             }
             catch (Exception exception)
             {
@@ -78,7 +74,7 @@ namespace ApiNetCore.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Put(UserEntity user)
+        public async Task<ActionResult> Put(UserDtoUpdate user)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

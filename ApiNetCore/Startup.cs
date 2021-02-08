@@ -36,6 +36,7 @@ namespace ApiNetCore
             services.AddServiceDepedencies();
             services.AddSwaggerDepedencies();
             services.AddSecurityDepedencies();
+            services.AddMapperDepedencies();
 
             
             services.AddControllers();

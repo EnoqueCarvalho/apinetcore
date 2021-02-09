@@ -26,5 +26,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     }
-  }
+  },
+
+  "ASPNETCORE_ENVIRONMENT": "Development",
+  "DB_CONNECTION": "Persist Security Info=True;Server=localhost;Port=3306;DataBase=dbAPI3;Uid=root;Pwd=mudar@123",
+  "DATABASE": "MYSQL",
+  "MIGRATION": "APLICAR",
+  "Audience": "ExemploAudience",
+  "Issuer": "ExemploIssue",
+  "Seconds": "28800"
 }
